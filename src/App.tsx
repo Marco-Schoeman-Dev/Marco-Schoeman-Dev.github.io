@@ -1,45 +1,34 @@
-import { Header } from './components/layout/Header'
-import { Footer } from './components/layout/Footer'
-import { Hero } from './components/sections/Hero'
-import { About } from './components/sections/About'
-import { Skills } from './components/sections/Skills'
-import { Certifications } from './components/sections/Certifications'
-import { Projects } from './components/sections/Projects'
-import { Contact } from './components/sections/Contact'
-import { Ticker } from './components/ui/Ticker'
-import { PageWipe } from './components/ui/PageWipe'
-import { Cursor } from './components/ui/Cursor'
-import { ParticleBackground } from './components/ui/ParticleBackground'
-import { useTheme } from './hooks/useTheme'
+import { useLenis } from './hooks/useLenis'
+import { Header } from './components/Header'
+import { Footer } from './components/Footer'
+import { Hero } from './sections/Hero'
+import { About } from './sections/About'
+import { Work } from './sections/Work'
+import { Method } from './sections/Method'
+import { Services } from './sections/Services'
+import { Contact } from './sections/Contact'
 
 export default function App() {
-  const { theme, toggle } = useTheme()
+  useLenis()
 
   return (
     <>
-      {/* Fixed, viewport-sized, behind everything — z-index handled by
-          .particle-layer / .app-content in index.css, not stacking order,
-          so there's no ambiguity about what paints on top. */}
-      <div className="particle-layer" aria-hidden="true">
-        <ParticleBackground className="h-full w-full" />
-      </div>
-
-      <div className="app-content">
-        <PageWipe />
-        <Cursor />
-        <Header theme={theme} onToggleTheme={toggle} />
-        <main>
-          <Hero />
-          <Ticker />
-          <About />
-          <Skills />
-          <Certifications />
-          <Projects />
-          <Ticker />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
+      <a
+        href="#main"
+        className="btn btn-primary fixed top-3 left-3 z-50 -translate-y-24 focus-visible:translate-y-0"
+      >
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <Hero />
+        <About />
+        <Work />
+        <Method />
+        <Services />
+        <Contact />
+      </main>
+      <Footer />
     </>
   )
 }

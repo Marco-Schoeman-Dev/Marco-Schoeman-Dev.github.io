@@ -1,0 +1,171 @@
+@layer base {
+  html {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) { scroll-behavior: smooth; }
+  }
+
+  html.scroll-locked { overflow: hidden; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    /* clip, not hidden: no horizontal page scroll, and sticky/pinning still work */
+    overflow-x: clip;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  [id] { scroll-margin-top: var(--header-h); }
+
+  ::selection {
+    background: var(--ember);
+    color: var(--on-ember);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Programmatic focus targets (sections after an anchor jump) */
+  [tabindex="-1"]:focus { outline: none; }
+
+  img, video, svg { display: block; max-width: 100%; }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p { margin: 0; text-wrap: pretty; }
+}
+
+@layer components {
+  /* Layout gutter shared by every section */
+  .shell {
+    width: 100%;
+    max-width: 1920px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Mono eyebrow: // 01 / WORK  プロジェクト */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .kana {
+    font-family: var(--font-kana);
+    letter-spacing: 0.12em;
+    color: var(--rust-ink);
+  }
+
+  .display {
+    /* Height cap keeps the title card inside one screen on short laptops */
+    font-size: clamp(3.5rem, min(12.5vw, 19svh), 15rem);
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.03em;
+  }
+
+  .h2 {
+    font-size: clamp(2.75rem, 8vw, 6.5rem);
+    text-transform: uppercase;
+    line-height: 0.88;
+  }
+
+  .lead {
+    font-size: clamp(1.125rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    min-height: 2.75rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 200ms var(--ease-quart),
+      border-color 200ms var(--ease-quart),
+      color 200ms var(--ease-quart),
+      box-shadow 250ms var(--ease-quart),
+      transform 200ms var(--ease-quart);
+  }
+
+  .btn-primary {
+    background: var(--ember);
+    color: var(--on-ember);
+  }
+  .btn-primary:hover { box-shadow: var(--glow-ember), 0 0 0 1px var(--neon); }
+  .btn-primary:active { transform: translateY(1px); }
+
+  .btn-secondary {
+    border: 1px solid rgb(255 244 238 / 0.3);
+    background: rgb(11 6 5 / 0.6);
+    color: var(--ink);
+  }
+  .btn-secondary:hover { border-color: var(--ember); color: var(--ember); }
+
+  .btn-sm { min-height: 2.75rem; padding: 0.5rem 0.9rem; font-size: 0.8125rem; }
+
+  /* Full-screen menu dialog */
+  dialog.menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  dialog.menu::backdrop { background: transparent; }
+
+  /* Underline-on-hover text link */
+  .link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgb(241 138 54 / 0.45);
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+    transition: color 200ms, text-decoration-color 200ms;
+  }
+  .link:hover { color: var(--ember); text-decoration-color: currentColor; }
+}
