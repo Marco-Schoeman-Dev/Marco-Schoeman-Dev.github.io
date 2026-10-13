@@ -1,0 +1,141 @@
+/* ── Anime texture layer ──────────────────────────────────────────────────
+   Original manga/anime vocabulary built from CSS: ink panels with chopped
+   corners, focus (speed) lines, halftone dots, neon tubes, sunset glow.
+   Everything decorative here is aria-hidden in markup. */
+
+@layer components {
+  /* ── Manga panel ──
+     Outer element is the ink; inner element is clipped to the same shape
+     inset by the border width, so the chopped corner keeps its ink line. */
+  .panel {
+    --cut: clamp(18px, 3vw, 36px);
+    --ink-w: 2px;
+    --panel-ink: rgb(255 244 238 / 0.85);
+    position: relative;
+    padding: var(--ink-w);
+    background: var(--panel-ink);
+    clip-path: var(--panel-shape);
+  }
+  .panel > .panel-inner {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: var(--surface);
+    clip-path: var(--panel-shape);
+  }
+
+  .panel,
+  .panel-cut-tr { --panel-shape: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
+  .panel-cut-bl { --panel-shape: polygon(0 0, 100% 0, 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut))); }
+  .panel-cut-both { --panel-shape: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut))); }
+  /* Hero: slanted left edge, title-card split */
+  .panel-slant { --panel-shape: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
+  @media (max-width: 1023px) {
+    /* Stacked hero (phone/tablet). Left edge higher: the left-aligned name sits clear of the ink line */
+    .panel-slant { --panel-shape: polygon(0 0, 100% 0, 100% 100%, 0 86%); }
+  }
+
+  /* ── Focus lines (集中線) ── radial speed lines around a clear centre */
+  .focus-lines {
+    --fx: 50%;
+    --fy: 50%;
+    --fl-color: rgb(241 138 54 / 0.28);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-conic-gradient(
+      from 0deg at var(--fx) var(--fy),
+      transparent 0deg 2.4deg,
+      var(--fl-color) 2.4deg 2.75deg,
+      transparent 2.75deg 5.1deg,
+      rgb(193 88 44 / 0.18) 5.1deg 5.3deg,
+      transparent 5.3deg 7.6deg
+    );
+    mask-image: radial-gradient(ellipse at var(--fx) var(--fy), transparent 0 32%, #000 78%);
+  }
+  /* Free-floating burst (not inside a panel): also fade out before the box edge */
+  .focus-lines-burst {
+    mask-image: radial-gradient(closest-side circle at var(--fx) var(--fy), transparent 0 46%, #000 62%, #000 72%, transparent 100%);
+  }
+
+  /* ── Halftone dots ── fade direction via --ht-mask */
+  .halftone {
+    --ht-color: rgb(193 88 44 / 0.55);
+    --ht-size: 7px;
+    position: absolute;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--ht-color) 0.9px, transparent 1.4px);
+    background-size: var(--ht-size) var(--ht-size);
+    mask-image: var(--ht-mask, linear-gradient(135deg, #000, transparent 70%));
+  }
+
+  /* ── Neon tube hairline ── */
+  .neon-line {
+    height: 1px;
+    background: var(--ember);
+    box-shadow: 0 0 6px rgb(241 138 54 / 0.9), 0 0 22px rgb(255 108 68 / 0.45);
+  }
+
+  /* ── Sunset glow behind sections ── */
+  .sunset-glow {
+    position: absolute;
+    pointer-events: none;
+    inset: 0;
+    background:
+      radial-gradient(60% 50% at 85% 10%, rgb(241 138 54 / 0.14), transparent 70%),
+      radial-gradient(40% 40% at 10% 90%, rgb(193 88 44 / 0.12), transparent 70%);
+  }
+
+  /* ── Impact frame (work cards) ──
+     Hover/focus: a 120ms flash, focus lines burst in, slight scale. */
+  .impact {
+    position: relative;
+    transition: transform 300ms var(--ease-expo);
+  }
+  .impact::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 45%, rgb(255 244 238 / 0.9), rgb(252 193 51 / 0.5) 35%, transparent 70%);
+    opacity: 0;
+  }
+  .impact .focus-lines { opacity: 0; transition: opacity 250ms var(--ease-quart); z-index: 2; }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .impact:hover,
+    .impact:focus-within { transform: scale(1.02); }
+    .impact:hover::after,
+    .impact:focus-within::after { animation: impact-flash 380ms var(--ease-quart); }
+  }
+  .impact:hover .focus-lines,
+  .impact:focus-within .focus-lines { opacity: 1; }
+
+  /* The card's stretched link hides its own ring; draw it around the card */
+  .impact:has(a:focus-visible) {
+    outline: 2px solid var(--neon);
+    outline-offset: 6px;
+  }
+
+  /* Slow drift on project stills so the reel feels alive without video */
+  .kenburns { transform-origin: 60% 40%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .kenburns { animation: kenburns 16s ease-in-out infinite alternate; }
+  }
+  @keyframes kenburns {
+    to { transform: scale(1.08) translate(-1.5%, 1%); }
+  }
+
+  @keyframes impact-flash {
+    0% { opacity: 0; }
+    18% { opacity: 0.55; }
+    100% { opacity: 0; }
+  }
+
+  /* Outlined display text (marquee) */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ember);
+  }
+}

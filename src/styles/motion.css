@@ -1,0 +1,59 @@
+/* ── Motion ──────────────────────────────────────────────────────────────
+   CSS-driven loops only. Scroll/entrance choreography lives in GSAP and is
+   skipped entirely under prefers-reduced-motion (see useGsap). */
+
+/* Prerendered HTML paints before JS. Hero pieces that animate in start
+   hidden only when JS will run and motion is allowed: the inline script in
+   index.html adds .js-motion (and removes it after 4s as a failsafe). */
+html.js-motion :is([data-hero-fade], [data-hero-marquee], #top h1) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Short laptop screens: drop the scroll cue so the marquee band stays above
+   the fold (unlayered on purpose, so it beats the lg:flex utility). */
+@media (max-height: 960px) {
+  .hero-scroll-cue { display: none; }
+}
+
+@layer components {
+  /* Marquee: two identical copies, each wider than the widest screen,
+     so translating by -50% loops seamlessly at any viewport. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  .scroll-cue-line {
+    transform-origin: top;
+    animation: scroll-cue 2.2s var(--ease-expo) infinite;
+  }
+
+  @keyframes scroll-cue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    50.1% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  .live-dot {
+    animation: live-pulse 2s var(--ease-quart) infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(242 25 3 / 0.55); }
+    70% { box-shadow: 0 0 0 7px rgb(242 25 3 / 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track,
+    .scroll-cue-line,
+    .live-dot { animation: none; }
+    .scroll-cue-line { transform: none; }
+  }
+}

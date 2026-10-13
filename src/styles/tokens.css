@@ -1,0 +1,32 @@
+/* ── Brand tokens (brand kit v1) ─────────────────────────────────────────
+   Dark only. ~80% surfaces, 15% text, 5% ember. See DESIGN.md. */
+:root {
+  --bg: #0b0605;
+  --surface: #140907;
+  --surface-raised: #1e0f0c;
+  --border: #401b13;
+
+  --ink: #fff4ee;
+  --ink-muted: #c4a596;
+
+  --ember: #f18a36;
+  --on-ember: #1a0d0a;
+  --neon: #ff6c44;
+  --rust: #c1582c; /* decoration only: 4.5:1 on bg, below AA on surfaces */
+  --rust-ink: #cc6432; /* rust for small text (katakana): ≥4.8:1 on every surface */
+  --sun: #fcc133;
+  --signal: #f21903; /* errors + "live" dots only */
+
+  /* --radius-sm/md/lg (4/8/16px) and --ease-expo/quart are defined in the
+     @theme block in index.css so Tailwind utilities share them. */
+
+  --glow-ember: 0 0 24px rgba(241, 138, 54, 0.35);
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --section-space: clamp(6rem, 14vw, 12rem);
+  --header-h: 4rem;
+}
+
+@media (min-width: 768px) {
+  :root { --header-h: 4.5rem; }
+}
