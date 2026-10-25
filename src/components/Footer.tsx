@@ -1,8 +1,8 @@
 import { menu, site, socials } from '../data/site'
 import { IconArrowUpRight } from './Icons'
 import { socialIcon } from './socialIcons'
+import { NeonWordmark } from './NeonWordmark'
 
-const kit = '/images/marco-schoeman-brand-kit/01-logo'
 
 export function Footer() {
   return (
@@ -68,8 +68,8 @@ export function Footer() {
       </div>
 
       {/* Giant wordmark */}
-      <div className="shell relative mt-16 pb-6 md:mt-24" aria-hidden="true">
-        <img src={`${kit}/wordmark-on-dark.svg`} alt="" width={830} height={104} loading="lazy" className="h-auto w-full opacity-95" />
+      <div className="shell relative mt-16 pb-6 md:mt-24">
+        <NeonWordmark className="block h-auto w-full overflow-visible" />
       </div>
     </footer>
   )
