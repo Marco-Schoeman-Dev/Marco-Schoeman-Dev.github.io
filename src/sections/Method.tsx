@@ -55,7 +55,7 @@ export function Method() {
   return (
     <section id="method" ref={ref} aria-labelledby="method-title" className="relative py-(--section-space)">
       <div className="shell relative">
-        <SectionLabel index="03" name="Method" kana="手法" className="mb-5" />
+        <SectionLabel index="05" name="Method" kana="手法" className="mb-5" />
         <KineticHeading id="method-title" label="How I work" className="h2 mb-12 text-ink md:mb-20">
           How I work
         </KineticHeading>

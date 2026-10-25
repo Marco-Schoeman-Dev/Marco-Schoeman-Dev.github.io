@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { projects } from '../data/projects'
+import { projectGroups, projectsIn } from '../data/projects'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { useGsap } from '../hooks/useGsap'
 import { KineticHeading } from '../components/KineticHeading'
@@ -7,7 +7,10 @@ import { SectionLabel } from '../components/SectionLabel'
 import { ImpactCard } from '../components/ImpactCard'
 
 const pad = (n: number) => String(n).padStart(2, '0')
+const group = projectGroups.web
+const projects = projectsIn('web')
 
+/** Web development: the sites I've built, as a pinned horizontal reel on desktop. */
 export function Work() {
   const ref = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLOListElement>(null)
@@ -100,21 +103,25 @@ export function Work() {
 
       <div className="shell relative mb-10 flex flex-wrap items-end justify-between gap-6 lg:mb-8">
         <div>
-          <SectionLabel index="02" name="Work" kana="プロジェクト" className="mb-5" />
-          <KineticHeading id="work-title" label="Selected work" className="h2 text-ink lg:motion-safe:text-[clamp(2.5rem,5vw,4.5rem)]">
-            Selected work
+          <SectionLabel index={group.index} name={group.name} kana={group.kana} className="mb-5" />
+          <KineticHeading id="work-title" label={group.title} className="h2 text-ink lg:motion-safe:text-[clamp(2.5rem,5vw,4.5rem)]">
+            {group.title}
           </KineticHeading>
         </div>
-        <div className="hidden items-center gap-4 lg:motion-safe:flex" aria-hidden="true">
-          <span className="font-display text-4xl font-bold tabular-nums">
-            <span ref={counterRef} className="text-ember">
-              01
+        {/* Intro sits beside the heading (not under it) so the pinned reel's height budget is unchanged */}
+        <div className="flex flex-col gap-4 lg:motion-safe:items-end">
+          <p className="max-w-[38ch] text-muted lg:motion-safe:text-right">{group.intro}</p>
+          <div className="hidden items-center gap-4 lg:motion-safe:flex" aria-hidden="true">
+            <span className="font-display text-4xl font-bold tabular-nums">
+              <span ref={counterRef} className="text-ember">
+                01
+              </span>
+              <span className="text-muted"> / {pad(projects.length)}</span>
             </span>
-            <span className="text-muted"> / {pad(projects.length)}</span>
-          </span>
-          <span className="relative h-px w-32 bg-line">
-            <span ref={barRef} className="absolute inset-0 origin-left scale-x-0 bg-ember" />
-          </span>
+            <span className="relative h-px w-32 bg-line">
+              <span ref={barRef} className="absolute inset-0 origin-left scale-x-0 bg-ember" />
+            </span>
+          </div>
         </div>
       </div>
 
@@ -126,7 +133,7 @@ export function Work() {
           {projects.map((p, i) => (
             // Pinned: width is capped by viewport height so card + heading always fit one screen
             <li key={p.id} data-work-card className="lg:motion-safe:w-[min(40vw,calc((100svh-37.5rem)*1.6))] lg:motion-safe:min-w-[22rem]">
-              <ImpactCard project={p} index={i} total={projects.length} />
+              <ImpactCard project={p} index={i} total={projects.length} variant="reel" />
             </li>
           ))}
         </ol>

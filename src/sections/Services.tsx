@@ -49,7 +49,7 @@ export function Services() {
       <div className="shell relative">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6 md:mb-20">
           <div>
-            <SectionLabel index="04" name="Services" kana="サービス" className="mb-5" />
+            <SectionLabel index="06" name="Services" kana="サービス" className="mb-5" />
             <KineticHeading id="services-title" label="What I do" className="h2 text-ink">
               What I do
             </KineticHeading>

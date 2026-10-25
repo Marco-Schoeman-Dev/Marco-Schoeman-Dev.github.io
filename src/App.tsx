@@ -4,6 +4,7 @@ import { Footer } from './components/Footer'
 import { Hero } from './sections/Hero'
 import { About } from './sections/About'
 import { Work } from './sections/Work'
+import { ProjectSection } from './sections/ProjectSection'
 import { Method } from './sections/Method'
 import { Services } from './sections/Services'
 import { Contact } from './sections/Contact'
@@ -24,6 +25,8 @@ export default function App() {
         <Hero />
         <About />
         <Work />
+        <ProjectSection category="security" />
+        <ProjectSection category="automation" surface />
         <Method />
         <Services />
         <Contact />

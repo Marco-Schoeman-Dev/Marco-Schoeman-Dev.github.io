@@ -95,7 +95,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
                   className="group flex items-baseline gap-[clamp(1rem,3vw,2.5rem)] py-[clamp(0.75rem,2vh,1.5rem)]"
                 >
                   <span className="label w-8 shrink-0 text-ember">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="font-display text-[clamp(2.75rem,10vw,7.5rem)] leading-[0.9] font-bold uppercase tracking-tight transition-[color,transform] duration-300 ease-expo group-hover:translate-x-3 group-hover:text-ember group-focus-visible:text-ember">
+                  <span className="font-display text-[clamp(2.25rem,min(10vw,8.5svh),7.5rem)] leading-[0.9] font-bold uppercase tracking-tight transition-[color,transform] duration-300 ease-expo group-hover:translate-x-3 group-hover:text-ember group-focus-visible:text-ember">
                     {item.label}
                   </span>
                   <span className="kana ml-auto hidden text-sm sm:block" aria-hidden="true" lang="ja">

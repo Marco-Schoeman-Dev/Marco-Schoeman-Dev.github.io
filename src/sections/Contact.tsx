@@ -48,7 +48,7 @@ export function Contact() {
       <div className="sunset-glow" aria-hidden="true" />
 
       <div className="shell relative">
-        <SectionLabel index="05" name="Contact" kana="コンタクト" className="mb-6" />
+        <SectionLabel index="07" name="Contact" kana="コンタクト" className="mb-6" />
         <KineticHeading id="contact-title" label={contact.title} className="display text-ink">
           Build it.
           <br />

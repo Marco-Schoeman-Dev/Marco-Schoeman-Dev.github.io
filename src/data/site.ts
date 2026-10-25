@@ -35,16 +35,18 @@ export interface NavItem {
   kana: string
 }
 
-/** Full-screen menu, numbered 01–04 */
+/** Full-screen menu, numbered in page order */
 export const menu: NavItem[] = [
   { id: 'about', label: 'About', href: '#about', kana: 'プロフィール' },
-  { id: 'work', label: 'Work', href: '#work', kana: 'プロジェクト' },
+  { id: 'work', label: 'Websites', href: '#work', kana: 'ウェブ開発' },
+  { id: 'security', label: 'Security', href: '#security', kana: 'セキュリティ' },
+  { id: 'automation', label: 'Automation', href: '#automation', kana: '自動化' },
   { id: 'services', label: 'Services', href: '#services', kana: 'サービス' },
   { id: 'contact', label: 'Contact', href: '#contact', kana: 'コンタクト' },
 ]
 
-/** Inline header links (desktop) */
-export const headerLinks = menu.filter((m) => m.id !== 'contact')
+/** Inline header links (desktop): the three portfolio disciplines */
+export const headerLinks = menu.filter((m) => ['work', 'security', 'automation'].includes(m.id))
 
 export const hero = {
   /** Plain-language offer, the first thing a visitor from social needs */

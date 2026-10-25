@@ -1,10 +1,15 @@
 import type { ImageKey } from './images'
 
-export type Discipline = 'Web build' | 'Red team' | 'Automation'
+export type Discipline = 'Web build' | 'Ethical hacking' | 'Web investigations' | 'AI automation'
+
+/** Which portfolio section a project lives in */
+export type ProjectCategory = 'web' | 'security' | 'automation'
 
 export interface Project {
   id: string
   title: string
+  category: ProjectCategory
+  /** Chip on the card image */
   discipline: Discipline
   /** Leave empty until confirmed; the card hides it */
   year?: string
@@ -26,6 +31,7 @@ export const projects: Project[] = [
   {
     id: 'king-jacub',
     title: 'King Jacub',
+    category: 'web',
     discipline: 'Web build',
     description:
       'Official site for creator King Jacub: content reel, custom statue shop, brand partnership bookings and a route into his TikTok kingdom, all wrapped in a black-and-gold look that matches the persona.',
@@ -38,6 +44,7 @@ export const projects: Project[] = [
   {
     id: 'juul-engineering',
     title: 'Juul Engineering',
+    category: 'web',
     discipline: 'Web build',
     description:
       'Website for a third-generation steel fabrication shop on the West Rand: draggable project gallery, spam-protected quote form, and responsive WebP imagery that loads fast on any connection.',
@@ -49,6 +56,7 @@ export const projects: Project[] = [
   {
     id: 'sylk-studio',
     title: 'Sylk Studio',
+    category: 'web',
     discipline: 'Web build',
     description:
       'Full website for a medical aesthetics and wellness studio: service showcase, brand-aligned design, and booking integration.',
@@ -58,20 +66,10 @@ export const projects: Project[] = [
     live: 'https://sylkstudio.co.za/',
   },
   {
-    id: 'osint-toolkit',
-    title: 'Private OSINT Toolkit',
-    discipline: 'Red team',
-    description:
-      'Curated collection of OSINT tools, scripts, and intelligence workflows built over years of red team operations. Available on private request.',
-    tags: ['OSINT', 'Intelligence', 'Recon'],
-    image: 'project-osint',
-    imageAlt: 'An operator at a dark multi-monitor desk next to a notebook embossed Private OSINT.',
-    private: true,
-  },
-  {
     id: 'redteam-ops',
     title: 'Red Team Engagements',
-    discipline: 'Red team',
+    category: 'security',
+    discipline: 'Ethical hacking',
     description:
       'Confidential offensive security work: Active Directory attacks, phishing simulations, physical intrusion, and full-scope red team ops. Enquire via email.',
     tags: ['Active Directory', 'Phishing', 'OPSEC', 'Physical'],
@@ -80,9 +78,22 @@ export const projects: Project[] = [
     private: true,
   },
   {
+    id: 'osint-toolkit',
+    title: 'Private OSINT Toolkit',
+    category: 'security',
+    discipline: 'Web investigations',
+    description:
+      'Curated collection of OSINT tools, scripts, and intelligence workflows built over years of red team operations. Available on private request.',
+    tags: ['OSINT', 'Intelligence', 'Recon'],
+    image: 'project-osint',
+    imageAlt: 'An operator at a dark multi-monitor desk next to a notebook embossed Private OSINT.',
+    private: true,
+  },
+  {
     id: 'ai-automations',
     title: 'AI Workflow Automations',
-    discipline: 'Automation',
+    category: 'automation',
+    discipline: 'AI automation',
     description:
       'Custom AI-powered automations built with n8n, Make, and the Claude API. Lead pipelines, document processing, Slack bots, internal tools. If it repeats, it gets automated.',
     tags: ['n8n', 'Claude API', 'Make'],
@@ -91,3 +102,69 @@ export const projects: Project[] = [
     private: true,
   },
 ]
+
+export interface ProjectGroup {
+  category: ProjectCategory
+  /** Section anchor */
+  id: string
+  index: string
+  name: string
+  kana: string
+  /** Main heading line */
+  title: string
+  /** Optional second, smaller heading line */
+  subtitle?: string
+  intro: string
+  /** What this discipline covers (shown beside the cards) */
+  highlights?: string[]
+  cta?: { label: string; channel: 'email' | 'instagram'; subject?: string }
+}
+
+/** Portfolio sections, in page order */
+export const projectGroups: Record<ProjectCategory, ProjectGroup> = {
+  web: {
+    category: 'web',
+    id: 'work',
+    index: '02',
+    name: 'Web development',
+    kana: 'ウェブ開発',
+    title: 'Web development',
+    intro: 'Sites I have designed, built and launched for real businesses and creators.',
+  },
+  security: {
+    category: 'security',
+    id: 'security',
+    index: '03',
+    name: 'Ethical hacking',
+    kana: 'セキュリティ',
+    title: 'Ethical hacking',
+    subtitle: '& private web investigations',
+    intro:
+      'Most of this work lives under NDA, so there are no screenshots. What I can share is what I do and how I do it.',
+    highlights: [
+      'Web app and network penetration testing',
+      'Active Directory attacks and full-scope red team operations',
+      'Private web investigations and OSINT on people, companies and infrastructure',
+      'Clear reports with fixes, not just a list of findings',
+    ],
+    cta: { label: 'Request a confidential briefing', channel: 'email', subject: 'Confidential briefing request' },
+  },
+  automation: {
+    category: 'automation',
+    id: 'automation',
+    index: '04',
+    name: 'AI automations',
+    kana: '自動化',
+    title: 'AI automations',
+    intro: 'Workflows that run themselves, so your team stops copy-pasting and starts closing.',
+    highlights: [
+      'Lead capture and follow-up pipelines',
+      'Document processing and data extraction',
+      'Slack and chat bots that answer for you',
+      'Internal tools wired into the apps you already use',
+    ],
+    cta: { label: 'DM me about an automation', channel: 'instagram' },
+  },
+}
+
+export const projectsIn = (category: ProjectCategory) => projects.filter((p) => p.category === category)
