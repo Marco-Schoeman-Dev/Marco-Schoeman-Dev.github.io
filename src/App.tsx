@@ -1,3 +1,4 @@
+import { Suspense, type ReactNode } from 'react'
 import { useLenis } from './hooks/useLenis'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
@@ -8,6 +9,13 @@ import { ProjectSection } from './sections/ProjectSection'
 import { Method } from './sections/Method'
 import { Services } from './sections/Services'
 import { Contact } from './sections/Contact'
+
+/**
+ * Each below-the-fold section is its own Suspense boundary. Nothing suspends;
+ * the boundaries let React hydrate the prerendered page in separate chunks and
+ * yield between them, instead of one long main-thread task (Total Blocking Time).
+ */
+const Chunk = ({ children }: { children: ReactNode }) => <Suspense>{children}</Suspense>
 
 export default function App() {
   useLenis()
@@ -23,15 +31,15 @@ export default function App() {
       <Header />
       <main id="main">
         <Hero />
-        <About />
-        <Work />
-        <ProjectSection category="security" />
-        <ProjectSection category="automation" surface />
-        <Method />
-        <Services />
-        <Contact />
+        <Chunk><About /></Chunk>
+        <Chunk><Work /></Chunk>
+        <Chunk><ProjectSection category="security" /></Chunk>
+        <Chunk><ProjectSection category="automation" surface /></Chunk>
+        <Chunk><Method /></Chunk>
+        <Chunk><Services /></Chunk>
+        <Chunk><Contact /></Chunk>
       </main>
-      <Footer />
+      <Chunk><Footer /></Chunk>
     </>
   )
 }

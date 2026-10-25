@@ -14,6 +14,8 @@ interface KineticHeadingProps {
   /** 'scroll' waits for the heading to enter view; 'load' plays immediately */
   trigger?: 'scroll' | 'load'
   delay?: number
+  /** Class added to every split letter (e.g. 'neon-char' for per-letter hover) */
+  charsClass?: string
 }
 
 /**
@@ -23,7 +25,16 @@ interface KineticHeadingProps {
  * Splitting is deferred until the heading approaches the viewport so first
  * load doesn't pay for layout on every heading at once.
  */
-export function KineticHeading({ as: Tag = 'h2', id, className = '', label, children, trigger = 'scroll', delay = 0 }: KineticHeadingProps) {
+export function KineticHeading({
+  as: Tag = 'h2',
+  id,
+  className = '',
+  label,
+  children,
+  trigger = 'scroll',
+  delay = 0,
+  charsClass,
+}: KineticHeadingProps) {
   const ref = useRef<HTMLHeadingElement>(null)
   const slashRef = useRef<HTMLSpanElement>(null)
 
@@ -39,6 +50,9 @@ export function KineticHeading({ as: Tag = 'h2', id, className = '', label, chil
           type: 'lines,chars',
           mask: 'lines',
           aria: 'none',
+          // SplitText rebuilds the letters, so any per-letter class has to be
+          // applied here rather than on spans in the markup
+          charsClass,
           autoSplit: true,
           onSplit(self) {
             gsap.set(el, { autoAlpha: 1 })
@@ -65,7 +79,7 @@ export function KineticHeading({ as: Tag = 'h2', id, className = '', label, chil
 
     if (trigger === 'load') play()
     else ScrollTrigger.create({ trigger: el, start: 'top bottom+=40%', once: true, onEnter: play })
-  }, ref)
+  }, ref, [], { defer: trigger !== 'load' })
 
   return (
     <Tag id={id} ref={ref} className={`relative ${className}`}>

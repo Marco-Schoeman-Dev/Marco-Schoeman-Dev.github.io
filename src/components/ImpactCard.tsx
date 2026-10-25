@@ -20,6 +20,13 @@ const pad = (n: number) => String(n).padStart(2, '0')
  */
 export function ImpactCard({ project, index, total, variant = 'grid' }: ImpactCardProps) {
   const reel = variant === 'reel'
+  // Images with an `imageAspect` are shown uncropped at their natural ratio:
+  // everywhere in grid cards; below lg in the reel (which keeps a uniform 16:10
+  // on desktop so pinned cards line up). The slow zoom-drift would clip their
+  // edges again, so it only runs where the image is cropped anyway.
+  const natural = project.imageAspect
+  const aspect = natural ? (reel ? `${natural} lg:aspect-16/10` : natural) : 'aspect-4/3 lg:aspect-16/10'
+  const drift = !natural ? 'kenburns' : reel ? 'kenburns-lg' : ''
   const href = project.private
     ? `mailto:${site.email}?subject=${encodeURIComponent(`Request: ${project.title}`)}`
     : project.live
@@ -29,10 +36,10 @@ export function ImpactCard({ project, index, total, variant = 'grid' }: ImpactCa
   return (
     <article className="impact group relative flex h-full flex-col">
       <div className="panel panel-cut-tr">
-        <div className="panel-inner aspect-4/3 lg:aspect-16/10">
+        <div className={`panel-inner ${aspect}`}>
           {project.video ? (
             <video
-              className="kenburns h-full w-full object-cover"
+              className={`${drift} h-full w-full object-cover`}
               src={project.video}
               poster={images[project.image].fallback}
               muted
@@ -48,17 +55,18 @@ export function ImpactCard({ project, index, total, variant = 'grid' }: ImpactCa
               alt={project.imageAlt}
               sizes="(min-width: 1024px) 46vw, 100vw"
               className="block h-full w-full"
-              imgClassName={`kenburns h-full w-full object-cover ${project.imageFocus ?? ''}`}
+              imgClassName={`${drift} h-full w-full object-cover ${project.imageFocus ?? ''}`}
             />
           )}
           <div className="focus-lines [--fl-color:rgb(252_193_51/0.35)]" aria-hidden="true" />
           <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(11_6_5/0.85),transparent_45%)]" aria-hidden="true" />
-          <span className="label absolute bottom-4 left-4 rounded-sm bg-bg/80 px-2 py-1 text-ink">
+          {/* Chips sit top-left/right: banners often carry their own text along the bottom */}
+          <span className="label absolute top-4 left-4 rounded-sm bg-bg/80 px-2 py-1 text-ink">
             {project.discipline}
             {project.year && <span className="text-muted"> · {project.year}</span>}
           </span>
           {project.private && (
-            <span className="label absolute right-4 bottom-4 flex items-center gap-2 rounded-sm bg-bg/80 px-2 py-1 text-muted">
+            <span className="label absolute top-4 right-10 flex items-center gap-2 rounded-sm bg-bg/80 px-2 py-1 text-muted">
               Private
             </span>
           )}

@@ -19,6 +19,11 @@ export interface Project {
   imageAlt: string
   /** Tailwind object-position class to steer the crop, e.g. 'object-[40%_center]' */
   imageFocus?: string
+  /**
+   * Tailwind aspect class for the card image below lg (default 'aspect-4/3').
+   * Use the image's own ratio for wide banners so phones show it uncropped.
+   */
+  imageAspect?: string
   /** Public live site. Omit for private work. */
   live?: string
   /** Private work: hides live link, shows a request-by-email CTA */
@@ -39,6 +44,8 @@ export const projects: Project[] = [
     image: 'project-kingjacub',
     imageAlt: 'King Jacub banner: gold crowned wordmark and lion seal beside him in a black suit, embers drifting through smoke.',
     imageFocus: 'object-[42%_center]',
+    // 1200×630 banner: show it whole on phones instead of cropping to 4:3
+    imageAspect: 'aspect-[40/21]',
     live: 'https://www.kingjacub.co.za/',
   },
   {
@@ -74,6 +81,7 @@ export const projects: Project[] = [
       'Confidential offensive security work: Active Directory attacks, phishing simulations, physical intrusion, and full-scope red team ops. Enquire via email.',
     tags: ['Active Directory', 'Phishing', 'OPSEC', 'Physical'],
     image: 'project-redteam',
+    imageAspect: 'aspect-[11/6]', // 11:6 source, shown uncropped
     imageAlt: 'A metal challenge coin engraved Red Team Operations with a red-eyed raven emblem.',
     private: true,
   },
@@ -86,6 +94,7 @@ export const projects: Project[] = [
       'Curated collection of OSINT tools, scripts, and intelligence workflows built over years of red team operations. Available on private request.',
     tags: ['OSINT', 'Intelligence', 'Recon'],
     image: 'project-osint',
+    imageAspect: 'aspect-[11/6]', // 11:6 source, shown uncropped
     imageAlt: 'An operator at a dark multi-monitor desk next to a notebook embossed Private OSINT.',
     private: true,
   },
@@ -98,6 +107,7 @@ export const projects: Project[] = [
       'Custom AI-powered automations built with n8n, Make, and the Claude API. Lead pipelines, document processing, Slack bots, internal tools. If it repeats, it gets automated.',
     tags: ['n8n', 'Claude API', 'Make'],
     image: 'project-automation',
+    imageAspect: 'aspect-[11/6]', // 11:6 source, shown uncropped
     imageAlt: 'Blue infinity-loop gears logo with the word Automation, shown on light and dark backgrounds.',
     private: true,
   },

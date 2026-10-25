@@ -69,6 +69,37 @@
     mask-image: var(--ht-mask, linear-gradient(135deg, #000, transparent 70%));
   }
 
+  /* ── Neon amber frame (hero portrait) ──
+     The halo is a separate, static, blurred copy of the panel shape sitting
+     behind it. A filter on the panel's own wrapper would re-rasterise on every
+     frame of the portrait's zoom-in (that cost ~190ms of blocking time on
+     mobile); this layer paints once. */
+  .neon-glow {
+    position: absolute;
+    inset: -5px;
+    filter: blur(12px);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .neon-glow > span {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--neon), var(--ember) 45%, var(--sun));
+    clip-path: var(--panel-shape);
+  }
+
+  /* ── Neon letters: hover a letter of the name and it lights up ── */
+  .neon-char {
+    transition: color 150ms var(--ease-quart), text-shadow 200ms var(--ease-quart);
+  }
+  .neon-char:hover {
+    color: var(--ember);
+    text-shadow:
+      0 0 6px rgb(241 138 54 / 0.9),
+      0 0 18px rgb(255 108 68 / 0.6),
+      0 0 42px rgb(255 108 68 / 0.35);
+  }
+
   /* ── Neon tube hairline ── */
   .neon-line {
     height: 1px;
@@ -119,9 +150,14 @@
   }
 
   /* Slow drift on project stills so the reel feels alive without video */
-  .kenburns { transform-origin: 60% 40%; }
+  .kenburns,
+  .kenburns-lg { transform-origin: 60% 40%; }
   @media (prefers-reduced-motion: no-preference) {
     .kenburns { animation: kenburns 16s ease-in-out infinite alternate; }
+  }
+  /* Drift only where the card crops the image (the desktop reel) */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+    .kenburns-lg { animation: kenburns 16s ease-in-out infinite alternate; }
   }
   @keyframes kenburns {
     to { transform: scale(1.08) translate(-1.5%, 1%); }
