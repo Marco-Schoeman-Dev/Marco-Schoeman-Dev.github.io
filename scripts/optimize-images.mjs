@@ -18,6 +18,7 @@ const images = {
   'hero-desktop': { src: `${kit}/04-hero/hero-desktop-1920x1080.jpg`, widths: [640, 960, 1280, 1920] },
   'hero-mobile': { src: `${kit}/04-hero/hero-mobile-1080x1350.jpg`, widths: [480, 640, 800, 1080] },
   'avatar-ring': { src: `${kit}/03-avatar/avatar-ring-512.png`, widths: [256, 384, 512] },
+  'project-kingjacub': { src: 'images/kingjacub.jpg', widths: [640, 1024, 1200] },
   'project-juul': { src: 'images/juul.webp', widths: [640, 1024, 1280] },
   'project-sylk': { src: 'images/sylk.png', widths: [640, 1024] },
   'project-osint': { src: 'images/OSINT.png', widths: [640, 1024, 1600] },

@@ -12,6 +12,8 @@ export interface Project {
   tags: string[]
   image: ImageKey
   imageAlt: string
+  /** Tailwind object-position class to steer the crop, e.g. 'object-[40%_center]' */
+  imageFocus?: string
   /** Public live site. Omit for private work. */
   live?: string
   /** Private work: hides live link, shows a request-by-email CTA */
@@ -21,6 +23,18 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: 'king-jacub',
+    title: 'King Jacub',
+    discipline: 'Web build',
+    description:
+      'Official site for creator King Jacub: content reel, custom statue shop, brand partnership bookings and a route into his TikTok kingdom, all wrapped in a black-and-gold look that matches the persona.',
+    tags: ['Web Dev', 'UI/UX', 'Branding'],
+    image: 'project-kingjacub',
+    imageAlt: 'King Jacub banner: gold crowned wordmark and lion seal beside him in a black suit, embers drifting through smoke.',
+    imageFocus: 'object-[42%_center]',
+    live: 'https://www.kingjacub.co.za/',
+  },
   {
     id: 'juul-engineering',
     title: 'Juul Engineering',

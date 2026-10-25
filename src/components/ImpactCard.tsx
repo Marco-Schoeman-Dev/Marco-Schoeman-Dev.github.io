@@ -45,7 +45,7 @@ export function ImpactCard({ project, index, total }: ImpactCardProps) {
               alt={project.imageAlt}
               sizes="(min-width: 1024px) 46vw, 100vw"
               className="block h-full w-full"
-              imgClassName="kenburns h-full w-full object-cover"
+              imgClassName={`kenburns h-full w-full object-cover ${project.imageFocus ?? ''}`}
             />
           )}
           <div className="focus-lines [--fl-color:rgb(252_193_51/0.35)]" aria-hidden="true" />

@@ -13,6 +13,7 @@ export type ImageKey =
   | 'hero-desktop'
   | 'hero-mobile'
   | 'avatar-ring'
+  | 'project-kingjacub'
   | 'project-juul'
   | 'project-sylk'
   | 'project-osint'
