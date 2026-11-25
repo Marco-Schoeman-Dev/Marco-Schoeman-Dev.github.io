@@ -47,7 +47,9 @@ export function KineticHeading({
         // autoSplit re-splits once web fonts land (or on resize) and re-creates
         // the returned timeline at the same progress, so line breaks stay right.
         SplitText.create(target, {
-          type: 'lines,chars',
+          // words: keeps each word in one wrapper, so a narrow column can
+          // never wrap a heading between letters
+          type: 'lines,words,chars',
           mask: 'lines',
           aria: 'none',
           // SplitText rebuilds the letters, so any per-letter class has to be

@@ -1,6 +1,6 @@
 /* ── Anime texture layer ──────────────────────────────────────────────────
    Original manga/anime vocabulary built from CSS: ink panels with chopped
-   corners, focus (speed) lines, halftone dots, neon tubes, sunset glow.
+   corners, focus (speed) lines, halftone dots, ember rules, sunset glow.
    Everything decorative here is aria-hidden in markup. */
 
 @layer components {
@@ -35,7 +35,7 @@
     .panel-slant { --panel-shape: polygon(0 0, 100% 0, 100% 100%, 0 86%); }
   }
 
-  /* ── Focus lines (集中線) ── radial speed lines around a clear centre */
+  /* ── Focus lines ── radial speed lines around a clear centre */
   .focus-lines {
     --fx: 50%;
     --fy: 50%;
@@ -69,57 +69,40 @@
     mask-image: var(--ht-mask, linear-gradient(135deg, #000, transparent 70%));
   }
 
-  /* ── Neon amber frame (hero portrait) ──
+  /* ── Ember glow frame (hero portrait) ──
      The halo is a separate, static, blurred copy of the panel shape sitting
      behind it. A filter on the panel's own wrapper would re-rasterise on every
      frame of the portrait's zoom-in (that cost ~190ms of blocking time on
      mobile); this layer paints once. */
-  .neon-glow {
+  .glow-frame {
     position: absolute;
     inset: -5px;
     filter: blur(12px);
     opacity: 0.8;
     pointer-events: none;
   }
-  .neon-glow > span {
+  .glow-frame > span {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--neon), var(--ember) 45%, var(--sun));
+    background: linear-gradient(135deg, var(--burnt-orange), var(--ember-glow) 45%, var(--sun));
     clip-path: var(--panel-shape);
   }
 
-  /* ── Neon letters: hover a letter of the name and it lights up ── */
-  .neon-char {
+  /* ── Glow letters: hover a letter of the name and it warms up ── */
+  .glow-char {
     transition: color 150ms var(--ease-quart), text-shadow 200ms var(--ease-quart);
   }
-  .neon-char:hover {
-    color: var(--ember);
+  .glow-char:hover {
+    color: var(--ember-glow);
     text-shadow:
-      0 0 6px rgb(241 138 54 / 0.9),
-      0 0 18px rgb(255 108 68 / 0.6),
-      0 0 42px rgb(255 108 68 / 0.35);
+      0 0 6px rgb(241 138 54 / 0.8),
+      0 0 22px rgb(193 88 44 / 0.5);
   }
 
-  /* Same effect for the footer wordmark (inline SVG, one <g> per letter).
-     The glow filter only exists while a letter is hovered, and nothing
-     animates underneath it, so it costs nothing at rest. */
-  .neon-glyph path {
-    fill: var(--ink);
-    transition: fill 150ms var(--ease-quart);
-  }
-  .neon-glyph.is-accent path { fill: var(--ember); }
-  .neon-glyph:hover path {
-    fill: var(--ember);
-    filter:
-      drop-shadow(0 0 4px rgb(241 138 54 / 0.9))
-      drop-shadow(0 0 14px rgb(255 108 68 / 0.6));
-  }
-
-  /* ── Neon tube hairline ── */
-  .neon-line {
+  /* ── Ember rule: thin warm hairline, no tube glow ── */
+  .ember-rule {
     height: 1px;
-    background: var(--ember);
-    box-shadow: 0 0 6px rgb(241 138 54 / 0.9), 0 0 22px rgb(255 108 68 / 0.45);
+    background: linear-gradient(90deg, var(--burnt-orange), var(--ember-glow) 50%, var(--burnt-orange));
   }
 
   /* ── Sunset glow behind sections ── */
@@ -160,7 +143,14 @@
 
   /* The card's stretched link hides its own ring; draw it around the card */
   .impact:has(a:focus-visible) {
-    outline: 2px solid var(--neon);
+    outline: 2px solid var(--ember-glow);
+    outline-offset: 6px;
+  }
+
+  /* Focus ring for a clip-pathed card whose only link is stretched over it
+     (the clip would cut the link's own outline) */
+  .ring-within:has(a:focus-visible) {
+    outline: 2px solid var(--ember-glow);
     outline-offset: 6px;
   }
 
@@ -187,6 +177,6 @@
   /* Outlined display text (marquee) */
   .text-outline {
     color: transparent;
-    -webkit-text-stroke: 1.5px var(--ember);
+    -webkit-text-stroke: 1.5px var(--ember-glow);
   }
 }
