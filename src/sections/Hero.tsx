@@ -139,7 +139,7 @@ export function Hero({ variant = 'portrait' }: { variant?: HeroVariant }) {
       <div className="shell relative z-3 mt-6 flex flex-1 flex-col justify-end pb-10 lg:mt-0 lg:min-h-svh lg:justify-center lg:pt-[calc(var(--header-h)+1rem)] lg:pb-[calc(var(--marquee-h)+2.5rem)]">
         <KineticHeading as="h1" trigger="load" delay={0.4} label="Marco Schoeman" charsClass="glow-char" className="display text-ink [text-shadow:0_2px_30px_rgb(11_6_5/0.6)]">
           {glowLetters('Marco')}
-          <br />
+          {' '}<br />
           {glowLetters('Schoeman')}
           <span className="text-ember">.</span>
         </KineticHeading>

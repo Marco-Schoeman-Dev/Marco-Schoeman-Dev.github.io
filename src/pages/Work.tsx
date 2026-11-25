@@ -18,7 +18,7 @@ export default function Work(_: PageProps) {
         title={
           <>
             Build it.
-            <br />
+            {' '}<br />
             <Accent>Break</Accent> it.
           </>
         }

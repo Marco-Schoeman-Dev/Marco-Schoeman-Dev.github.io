@@ -81,7 +81,7 @@ export function Footer() {
         </a>
         <p className="label text-muted sm:text-right">
           © {site.year} {site.name}
-          <br />
+          {' '}<br />
           {site.role}
         </p>
       </div>

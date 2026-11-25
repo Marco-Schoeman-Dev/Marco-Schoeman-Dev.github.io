@@ -50,9 +50,9 @@ export function Profile({ index = '01' }: { index?: string }) {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <KineticHeading id="profile-title" label="Developer. Operator. Both." className="h2 text-ink lg:col-span-5 lg:text-[clamp(3rem,5.2vw,5.5rem)]">
             Developer.
-            <br />
+            {' '}<br />
             Operator.
-            <br />
+            {' '}<br />
             <Accent>Both.</Accent>
           </KineticHeading>
           <div data-profile-copy className="flex max-w-[65ch] flex-col gap-5 lg:col-span-7">

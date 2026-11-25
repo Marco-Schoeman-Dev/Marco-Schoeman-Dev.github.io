@@ -179,7 +179,7 @@ export default function FoundersClub(_: PageProps) {
         title={
           <>
             The Founders
-            <br />
+            {' '}<br />
             Club
           </>
         }

@@ -102,7 +102,7 @@ export default function Lives(_: PageProps) {
         title={
           <>
             Lives, written
-            <br />
+            {' '}<br />
             <Accent>down</Accent>.
           </>
         }

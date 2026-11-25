@@ -53,7 +53,7 @@ export function Contact({ index = '05' }: { index?: string }) {
         <SectionLabel index={index} name="Contact" className="mb-6" />
         <KineticHeading id="contact-title" label="Start a project." className="display text-ink">
           Start a
-          <br />
+          {' '}<br />
           <Accent>project</Accent>.
         </KineticHeading>
 

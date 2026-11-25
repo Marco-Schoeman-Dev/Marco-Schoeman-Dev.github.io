@@ -110,7 +110,7 @@ export default function About(_: PageProps) {
         title={
           <>
             The short
-            <br />
+            {' '}<br />
             <Accent>version</Accent>.
           </>
         }

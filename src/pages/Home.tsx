@@ -80,7 +80,7 @@ function ClubTeaser() {
           <SectionLabel index="02" name="The Founders Club" className="mb-5" />
           <KineticHeading id="home-club-title" label="A smaller room." className="h2 text-ink">
             A smaller
-            <br />
+            {' '}<br />
             <Accent>room</Accent>.
           </KineticHeading>
           <p className="lead mt-8 max-w-[44ch]">{homeClub.intro}</p>
@@ -126,7 +126,7 @@ function WorkTeaser() {
             <SectionLabel index="03" name="Work" className="mb-5" />
             <KineticHeading id="home-work-title" label="I also build things." className="h2 text-ink">
               I also build
-              <br />
+              {' '}<br />
               <Accent>things</Accent>.
             </KineticHeading>
           </div>
