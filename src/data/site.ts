@@ -1,13 +1,19 @@
 // ─── Site-wide content ────────────────────────────────────────────────────────
 // All copy lives in src/data/*. Edit content here, not in components.
+// Voice: deadpan, observational, logical, short. No hype words.
 
 export const site = {
   name: 'Marco Schoeman',
-  role: 'Founder · Web developer · Tech operator',
+  url: 'https://marcoschoeman.com',
+  role: 'Founder · Operator · Builder',
   location: 'South Africa',
   email: 'marcoschoeman1988@gmail.com',
   handle: '@marco_founder',
   year: 2026,
+  club: 'The Founders Club',
+  /** Shared social preview image (brand kit) */
+  ogImage: '/images/brand/og-image-1200x630.png',
+  ogImageAlt: 'Marco Schoeman logo',
 }
 
 export interface SocialLink {
@@ -32,43 +38,64 @@ export interface NavItem {
   id: string
   label: string
   href: string
-  kana: string
 }
 
-/** Full-screen menu, numbered in page order */
-export const menu: NavItem[] = [
-  { id: 'about', label: 'About', href: '#about', kana: 'プロフィール' },
-  { id: 'work', label: 'Websites', href: '#work', kana: 'ウェブ開発' },
-  { id: 'security', label: 'Security', href: '#security', kana: 'セキュリティ' },
-  { id: 'automation', label: 'Automation', href: '#automation', kana: '自動化' },
-  { id: 'services', label: 'Services', href: '#services', kana: 'サービス' },
-  { id: 'contact', label: 'Contact', href: '#contact', kana: 'コンタクト' },
+/** Shared header / menu / footer navigation */
+export const nav: NavItem[] = [
+  { id: 'lives', label: 'Lives', href: '/lives' },
+  { id: 'club', label: 'The Founders Club', href: '/founders-club' },
+  { id: 'work', label: 'Work', href: '/work' },
+  { id: 'about', label: 'About', href: '/about' },
 ]
 
-/** Inline header links (desktop): the three portfolio disciplines */
-export const headerLinks = menu.filter((m) => ['work', 'security', 'automation'].includes(m.id))
+/** Primary header button */
+export const applyHref = '/founders-club'
 
 export const hero = {
-  /** Plain-language offer, the first thing a visitor from social needs */
-  offer: ['Websites', 'AI automations', 'Penetration testing'],
+  /** One-line positioning under the name */
+  offer: 'Founder of The Founders Club',
   intro:
-    "Clean code and a real attacker's perspective. Building secure, well-engineered software, and testing its limits.",
-  marquee: ['Marco Schoeman', `Portfolio ${site.year}`, 'ウェブ開発'],
+    'I run businesses, build the systems behind them and talk through it live. Mostly so other founders can make cheaper mistakes.',
+  marquee: ['Founder', 'Operator', 'Builder', 'The Founders Club'],
   imageAlt:
     'Illustrated portrait of Marco in headphones and orange-mirrored sunglasses at his desk, a sunset city skyline behind him.',
 }
 
-export const about = {
-  paragraphs: [
-    'I build fullstack web applications and break into systems for a living, sometimes both on the same day. My background spans React, TypeScript, Node.js, and API automation, combined with hands-on offensive security: web app pentesting, Active Directory attacks, and red team operations.',
-    "Moving from development into offensive security changed how I write code. I don't just think about what a feature should do; I think about how an attacker would abuse it. That shift makes the software I ship more resilient, not just functional.",
-    'Based in South Africa, available for remote work and consulting worldwide.',
-  ],
-  avatarAlt: 'Illustrated avatar of Marco in headphones and orange-mirrored sunglasses.',
+export const homeLives = {
+  title: 'Recent Lives',
+  intro:
+    'I go live, work through one business problem, then write it up properly. Because nobody remembers anything from a livestream.',
 }
 
-export const contact = {
-  title: 'Build it. Break it.',
-  lead: 'The fastest way to reach me is a DM. Tell me what you are building, or what you want broken, and I will take it from there.',
-  replyNote: 'I reply within 48 hours.',
+export const homeClub = {
+  intro:
+    'An application-only network for business owners, C-suite and content creators. Weekly calls, one-on-one sessions and a chat where nobody is selling a course.',
+  price: 'USD $30/month for the first 20 founding members.',
 }
+
+export const homeWork = {
+  intro:
+    'Websites, AI automations and security testing, for businesses that would rather not find out the hard way.',
+}
+
+export const about = {
+  paragraphs: [
+    'I am a founder and operator based in South Africa. I run businesses, build the software behind them and test its security, usually in that order.',
+    'I go live to work through one business problem at a time. Afterwards each one becomes a post on this site, so the useful part outlives the stream.',
+    'The Founders Club is the private version: a small group of founders, executives and creators comparing what actually works.',
+    'Before all of that I was a developer, then I moved into offensive security. The second part explains the trust issues.',
+  ],
+  avatarAlt: 'Marco Schoeman',
+}
+
+/** Condensed bio on the Work page */
+export const workIntro = [
+  'I build full-stack web applications and test systems for security weaknesses, sometimes on the same day. React, TypeScript, Node.js and API automation on one side; web app pentesting and Active Directory red teaming on the other.',
+  'Knowing how things get attacked changes how I build them. The result is software that is fast, tidy and harder to break.',
+]
+
+export const contact = {
+  lead: 'DM me what you are building, or what you would like tested. I reply within 48 hours, which is faster than most agencies send a proposal.',
+}
+
+export const disclaimer = 'General information, not legal or financial advice.'

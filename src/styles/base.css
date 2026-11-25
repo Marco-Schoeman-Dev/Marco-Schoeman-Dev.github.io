@@ -23,6 +23,7 @@
     overflow-x: clip;
     font-size: 1.0625rem;
     line-height: 1.65;
+    overflow-wrap: anywhere;
   }
 
   [id] { scroll-margin-top: var(--header-h); }
@@ -33,7 +34,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--neon);
+    outline: 2px solid var(--ember-glow);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -64,7 +65,7 @@
     padding-inline: var(--gutter);
   }
 
-  /* Mono eyebrow: // 01 / WORK  プロジェクト */
+  /* Mono eyebrow: // 01 / WORK */
   .label {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -72,12 +73,6 @@
     letter-spacing: 0.16em;
     text-transform: uppercase;
     line-height: 1.4;
-  }
-
-  .kana {
-    font-family: var(--font-kana);
-    letter-spacing: 0.12em;
-    color: var(--rust-ink);
   }
 
   .display {
@@ -115,7 +110,11 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-decoration: none;
-    white-space: nowrap;
+    /* One line when it fits; wraps inside (never overflows) at large text sizes */
+    flex-shrink: 0;
+    max-width: 100%;
+    text-align: center;
+    text-wrap: balance;
     transition:
       background-color 200ms var(--ease-quart),
       border-color 200ms var(--ease-quart),
@@ -125,10 +124,10 @@
   }
 
   .btn-primary {
-    background: var(--ember);
+    background: var(--ember-glow);
     color: var(--on-ember);
   }
-  .btn-primary:hover { box-shadow: var(--glow-ember), 0 0 0 1px var(--neon); }
+  .btn-primary:hover { box-shadow: var(--glow-ember), 0 0 0 1px var(--sun); }
   .btn-primary:active { transform: translateY(1px); }
 
   .btn-secondary {
@@ -136,7 +135,7 @@
     background: rgb(11 6 5 / 0.6);
     color: var(--ink);
   }
-  .btn-secondary:hover { border-color: var(--ember); color: var(--ember); }
+  .btn-secondary:hover { border-color: var(--ember-glow); color: var(--ember-glow); }
 
   .btn-sm { min-height: 2.75rem; padding: 0.5rem 0.9rem; font-size: 0.8125rem; }
 
@@ -167,5 +166,137 @@
     text-decoration-thickness: 1px;
     transition: color 200ms, text-decoration-color 200ms;
   }
-  .link:hover { color: var(--ember); text-decoration-color: currentColor; }
+  .link:hover { color: var(--ember-glow); text-decoration-color: currentColor; }
+
+  /* Page title on inner pages: one step down from the home hero name */
+  .page-title {
+    font-size: clamp(3rem, min(10vw, 16svh), 9rem);
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+  }
+
+  /* Markdown body of a Live (content/lives/*.md) */
+  .prose-live {
+    max-width: 70ch;
+    font-family: var(--font-sans);
+    font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+    line-height: 1.8;
+    color: var(--ink-muted);
+  }
+  .prose-live > * + * { margin-top: 1.4em; }
+  /* Opening paragraph reads as a standfirst */
+  .prose-live > p:first-child {
+    font-size: clamp(1.1875rem, 1.6vw, 1.375rem);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .prose-live :is(h2, h3) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  /* H2: Chakra Petch with a short ember bar above it */
+  .prose-live h2 {
+    position: relative;
+    margin-top: 2.75em;
+    padding-top: 1.1rem;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+  .prose-live h2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 3px;
+    background: var(--ember-glow);
+    box-shadow: 0 0 12px rgb(241 138 54 / 0.6);
+  }
+  .prose-live h3 { margin-top: 2em; font-size: clamp(1.375rem, 2.4vw, 1.75rem); }
+  .prose-live :is(h2, h3) + * { margin-top: 0.9em; }
+  .prose-live strong { color: var(--ink); font-weight: 600; }
+  .prose-live a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: rgb(241 138 54 / 0.45);
+    text-underline-offset: 0.25em;
+  }
+  .prose-live a:hover { color: var(--ember-glow); }
+  /* In-post images (diagrams): full column width, 12px radius, 1px border,
+     40px above and below, click to open full size */
+  .prose-live .prose-figure { margin-block: 40px; }
+  .prose-live .prose-figure + :not(h2, h3) { margin-top: 0; }
+  .prose-live .prose-figure a {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    cursor: zoom-in;
+    text-decoration: none;
+    transition: border-color 200ms var(--ease-quart), box-shadow 250ms var(--ease-quart);
+  }
+  .prose-live .prose-figure a:hover { border-color: var(--ember-glow); box-shadow: 0 0 28px rgb(241 138 54 / 0.18); }
+  .prose-live .prose-figure a:focus-visible { outline-offset: 4px; }
+  .prose-live .prose-figure :is(picture, img) { display: block; width: 100%; height: auto; }
+
+  /* Lists: ember dash bullets, ember numerals in Chakra Petch */
+  .prose-live :is(ul, ol) { padding-left: 0; list-style: none; }
+  .prose-live li { position: relative; padding-left: 1.75em; }
+  .prose-live li + li { margin-top: 0.6em; }
+  .prose-live ul > li::before {
+    content: "";
+    position: absolute;
+    left: 0.15em;
+    top: 0.85em;
+    width: 0.8em;
+    height: 2px;
+    background: var(--ember-glow);
+  }
+  .prose-live ol { counter-reset: prose-ol; }
+  .prose-live ol > li { counter-increment: prose-ol; }
+  .prose-live ol > li::before {
+    content: counter(prose-ol, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9em;
+    color: var(--ember-glow);
+  }
+  .prose-live li > :is(ul, ol) { margin-top: 0.6em; }
+  .prose-live em { color: var(--ink); }
+  .prose-live hr { border: 0; border-top: 1px solid var(--border); margin-block: 2.5em; }
+  .prose-live code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-sm);
+    background: var(--surface-raised);
+    color: var(--ink);
+  }
+  .prose-live blockquote {
+    border-left: 2px solid var(--ember-glow);
+    padding-left: 1.25em;
+    color: var(--ink);
+  }
+
+  /* FAQ disclosure (native <details>, works without JS) */
+  .faq > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 2.75rem;
+    padding-block: 1.5rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq > summary::-webkit-details-marker { display: none; }
+  .faq > summary .faq-icon { transition: transform 300ms var(--ease-expo), color 200ms; }
+  .faq[open] > summary .faq-icon { transform: rotate(45deg); color: var(--ember-glow); }
 }

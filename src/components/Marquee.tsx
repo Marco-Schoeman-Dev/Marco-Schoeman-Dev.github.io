@@ -7,7 +7,7 @@ interface MarqueeProps {
 // slides -50%. Repeat count keeps a single copy comfortably wider than that.
 const REPEATS = 4
 
-/** Decorative looping band between neon tube lines. Hidden from assistive tech. */
+/** Decorative looping band between ember rules. Hidden from assistive tech. */
 export function Marquee({ items, className = '' }: MarqueeProps) {
   const copy = Array.from({ length: REPEATS }, () => items).flat()
 
@@ -19,7 +19,6 @@ export function Marquee({ items, className = '' }: MarqueeProps) {
             className={`font-display px-[0.35em] text-[clamp(2rem,6vw,4.5rem)] font-bold uppercase leading-none tracking-tight ${
               i % 2 === 1 ? 'text-outline' : 'text-ink'
             }`}
-            lang={/[぀-ヿ一-龯]/.test(item) ? 'ja' : undefined}
           >
             {item}
           </span>
@@ -31,14 +30,14 @@ export function Marquee({ items, className = '' }: MarqueeProps) {
 
   return (
     <div className={`relative overflow-hidden ${className}`} aria-hidden="true">
-      <div className="neon-line" />
+      <div className="ember-rule" />
       <div className="bg-bg/80 py-[clamp(0.75rem,2vw,1.25rem)]">
         <div className="marquee-track">
           {renderCopy('a')}
           {renderCopy('b')}
         </div>
       </div>
-      <div className="neon-line" />
+      <div className="ember-rule" />
     </div>
   )
 }

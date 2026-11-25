@@ -1,26 +1,26 @@
-/* ── Brand tokens (brand kit v1) ─────────────────────────────────────────
+/* ── Brand tokens: ember palette ────────────────────────────────────────
    Dark only. ~80% surfaces, 15% text, 5% ember. See DESIGN.md. */
 :root {
-  --bg: #0b0605;
+  /* Base */
+  --bg: #0b0605; /* near-black */
   --surface: #140907;
   --surface-raised: #1e0f0c;
   --border: #401b13;
 
+  /* Text: warm off-white */
   --ink: #fff4ee;
   --ink-muted: #c4a596;
 
-  --ember: #f18a36;
-  --on-ember: #1a0d0a;
-  --neon: #ff6c44;
-  --rust: #c1582c; /* decoration only: 4.5:1 on bg, below AA on surfaces */
-  --rust-ink: #cc6432; /* rust for small text (katakana): ≥4.8:1 on every surface */
-  --sun: #fcc133;
-  --signal: #f21903; /* errors + "live" dots only */
+  /* Ember */
+  --burnt-orange: #c1582c; /* decoration, rules, textures (4.5:1 on bg, not for small text on surfaces) */
+  --ember-glow: #f18a36; /* accents, primary button, focus ring, the one <Accent> word per heading (8.1:1 on bg) */
+  --on-ember: #1a0d0a; /* text on ember fills */
+  --sun: #fcc133; /* rare highlight: glow cores, ember particles */
 
   /* --radius-sm/md/lg (4/8/16px) and --ease-expo/quart are defined in the
      @theme block in index.css so Tailwind utilities share them. */
 
-  --glow-ember: 0 0 24px rgba(241, 138, 54, 0.35);
+  --glow-ember: 0 0 24px rgb(241 138 54 / 0.35);
 
   --gutter: clamp(1rem, 4vw, 3rem);
   --section-space: clamp(6rem, 14vw, 12rem);

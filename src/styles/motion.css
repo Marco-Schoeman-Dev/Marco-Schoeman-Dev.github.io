@@ -2,10 +2,11 @@
    CSS-driven loops only. Scroll/entrance choreography lives in GSAP and is
    skipped entirely under prefers-reduced-motion (see useGsap). */
 
-/* Prerendered HTML paints before JS. Hero pieces that animate in start
-   hidden only when JS will run and motion is allowed: the inline script in
-   index.html adds .js-motion (and removes it after 4s as a failsafe). */
-html.js-motion :is([data-hero-fade], [data-hero-marquee], #top h1) {
+/* Prerendered HTML paints before JS. The home hero pieces and each page's
+   title (#top h1) start hidden only when JS will run and motion is allowed:
+   the inline script in index.html adds .js-motion (and removes it after 4s
+   as a failsafe). KineticHeading reveals the title as its entrance starts. */
+html.js-motion :is([data-hero-fade], [data-hero-marquee], [data-hero-emblem], #top h1) {
   visibility: hidden;
   opacity: 0;
 }
@@ -46,8 +47,8 @@ html.js-motion :is([data-hero-fade], [data-hero-marquee], #top h1) {
   }
 
   @keyframes live-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgb(242 25 3 / 0.55); }
-    70% { box-shadow: 0 0 0 7px rgb(242 25 3 / 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgb(241 138 54 / 0.55); }
+    70% { box-shadow: 0 0 0 7px rgb(241 138 54 / 0); }
   }
 
   @media (prefers-reduced-motion: reduce) {

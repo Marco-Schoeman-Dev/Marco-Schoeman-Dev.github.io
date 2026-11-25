@@ -7,18 +7,19 @@ export interface ImageEntry {
   avif: string[]
   webp: string[]
   fallback: string
+  /** 1200×630 JPEG share image (Lives covers only) */
+  og?: string
 }
 
 export type ImageKey =
   | 'hero-desktop'
   | 'hero-mobile'
-  | 'avatar-ring'
+  | 'logo-emblem'
+  | 'logo-lockup'
+  | 'profile'
   | 'project-kingjacub'
   | 'project-juul'
   | 'project-sylk'
-  | 'project-osint'
-  | 'project-redteam'
-  | 'project-automation'
   | 'method-operative'
   | 'badge-crta'
   | 'badge-ctia'
@@ -27,4 +28,16 @@ export type ImageKey =
   | 'badge-cisco-ic'
   | 'badge-cisco-nb'
 
-export const images = manifest as Record<ImageKey, ImageEntry>
+const all = manifest as Record<string, ImageEntry>
+
+export const images = all as Record<ImageKey, ImageEntry>
+
+/**
+ * Optimised copies of a file in public/images/lives/, by its public path:
+ * "/images/lives/what-is-seo/cover.png" → key "lives/what-is-seo/cover".
+ * Undefined if the image step hasn't processed it (then use the original).
+ */
+export function imageForPath(path: string): ImageEntry | undefined {
+  const key = path.replace(/^\/?images\//, '').replace(/\.\w+$/, '')
+  return all[key]
+}

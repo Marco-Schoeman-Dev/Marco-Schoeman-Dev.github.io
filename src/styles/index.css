@@ -5,9 +5,6 @@
 @import "./anime.css";
 @import "./motion.css";
 
-/* `short:` = pinned work reel on a short desktop screen (1366×768, 1280×720…) */
-@custom-variant short (@media (min-width: 1024px) and (max-height: 860px) and (prefers-reduced-motion: no-preference));
-
 /* Map brand tokens into Tailwind utilities: bg-surface, text-ember, font-display… */
 @theme inline {
   --color-bg: var(--bg);
@@ -16,17 +13,14 @@
   --color-line: var(--border);
   --color-ink: var(--ink);
   --color-muted: var(--ink-muted);
-  --color-ember: var(--ember);
+  --color-ember: var(--ember-glow);
+  --color-burnt: var(--burnt-orange);
   --color-on-ember: var(--on-ember);
-  --color-neon: var(--neon);
-  --color-rust: var(--rust);
   --color-sun: var(--sun);
-  --color-signal: var(--signal);
 
   --font-display: "Chakra Petch", "Arial Narrow", system-ui, sans-serif;
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
-  --font-kana: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
 
   --shadow-glow: var(--glow-ember);
 }

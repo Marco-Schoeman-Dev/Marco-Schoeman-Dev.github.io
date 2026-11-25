@@ -8,11 +8,11 @@ import { Picture } from '../components/Picture'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-export function Method() {
+export function Method({ index = '04' }: { index?: string }) {
   const ref = useRef<HTMLElement>(null)
 
   useGsap(() => {
-    // Neon spine fills as you read down the steps
+    // Ember spine fills as you read down the steps
     gsap.fromTo(
       '[data-spine]',
       { scaleY: 0 },
@@ -55,7 +55,7 @@ export function Method() {
   return (
     <section id="method" ref={ref} aria-labelledby="method-title" className="relative py-(--section-space)">
       <div className="shell relative">
-        <SectionLabel index="05" name="Method" kana="手法" className="mb-5" />
+        <SectionLabel index={index} name="Method" className="mb-5" />
         <KineticHeading id="method-title" label="How I work" className="h2 mb-12 text-ink md:mb-20">
           How I work
         </KineticHeading>
@@ -78,14 +78,6 @@ export function Method() {
                   <div className="focus-lines opacity-50 [--fx:50%] [--fy:18%]" aria-hidden="true" />
                   <div className="halftone right-0 bottom-0 h-1/2 w-2/3 [--ht-mask:linear-gradient(315deg,#000,transparent_65%)]" aria-hidden="true" />
                   <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(11_6_5/0.75),transparent_40%)]" aria-hidden="true" />
-                  {/* Vertical katakana down the panel edge, like a manga sound/caption strip */}
-                  <span
-                    aria-hidden="true"
-                    lang="ja"
-                    className="kana absolute top-6 right-4 text-sm tracking-[0.4em] [writing-mode:vertical-rl] text-ember!"
-                  >
-                    {methodArt.kana}
-                  </span>
                   <figcaption className="label absolute bottom-5 left-5 text-ink">
                     <span className="text-ember">{'// '}</span>Operator mode
                   </figcaption>
@@ -97,7 +89,7 @@ export function Method() {
           <ol data-steps className="relative lg:col-span-8">
             {/* Spine: decorative progress line */}
             <span className="absolute top-0 bottom-0 left-0 hidden w-px bg-line md:block" aria-hidden="true">
-              <span data-spine className="neon-line block w-full origin-top" style={{ height: '100%' }} />
+              <span data-spine className="ember-rule block w-full origin-top" style={{ height: '100%' }} />
             </span>
 
             {method.map((step, i) => (
@@ -122,9 +114,6 @@ export function Method() {
                     <span>
                       <span className="sr-only">Step {i + 1}: </span>
                       {step.title}
-                    </span>
-                    <span className="kana text-base" aria-hidden="true" lang="ja">
-                      {step.kana}
                     </span>
                   </h3>
                   <p className="mt-4 max-w-[48ch] text-muted">{step.body}</p>

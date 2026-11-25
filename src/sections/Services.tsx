@@ -10,7 +10,7 @@ import { IconArrowUpRight, IconPlus } from '../components/Icons'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-export function Services() {
+export function Services({ index = '03' }: { index?: string }) {
   const ref = useRef<HTMLElement>(null)
   // A set, not a single id: hovering only ever opens rows, so rows above the
   // pointer never collapse and the list doesn't jump under the cursor.
@@ -49,12 +49,12 @@ export function Services() {
       <div className="shell relative">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6 md:mb-20">
           <div>
-            <SectionLabel index="06" name="Services" kana="サービス" className="mb-5" />
+            <SectionLabel index={index} name="Services" className="mb-5" />
             <KineticHeading id="services-title" label="What I do" className="h2 text-ink">
               What I do
             </KineticHeading>
           </div>
-          <p className="max-w-[36ch] text-muted">Pick one, or let me build it, automate it and then try to break it.</p>
+          <p className="max-w-[36ch] text-muted">Pick one. Or let me build it, automate it, then try to break it before someone else does.</p>
         </div>
 
         <ul data-services className="border-t border-line">
@@ -81,12 +81,9 @@ export function Services() {
                     >
                       {s.title}
                     </span>
-                    <span className="kana ml-auto hidden text-sm md:block" aria-hidden="true" lang="ja">
-                      {s.kana}
-                    </span>
                     <span
                       aria-hidden="true"
-                      className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-[transform,border-color,color] duration-300 ease-expo max-md:ml-auto ${
+                      className={`ml-auto grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-[transform,border-color,color] duration-300 ease-expo ${
                         open ? 'rotate-45 border-ember text-ember' : 'border-line text-muted group-hover:border-ember'
                       }`}
                     >

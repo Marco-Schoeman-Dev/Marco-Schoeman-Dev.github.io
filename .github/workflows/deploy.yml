@@ -1,8 +1,16 @@
-name: Deploy to GitHub Pages
+name: Redirect GitHub Pages to marcoschoeman.com
+
+# The site itself is built and hosted by Cloudflare Pages (see README.md).
+# This workflow only publishes github-pages-redirect/ to
+# marco-schoeman-dev.github.io, so old links land on marcoschoeman.com.
+# Merge this to main only AFTER marcoschoeman.com is live on Cloudflare.
 
 on:
   push:
     branches: [main]
+    paths:
+      - github-pages-redirect/**
+      - .github/workflows/deploy.yml
   workflow_dispatch:
 
 permissions:
@@ -20,22 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-
-      # prebuild generates AVIF/WebP copies (scripts/optimize-images.mjs),
-      # then: type-check → client build → SSR build → prerender into dist/index.html
-      - run: npm run build
-
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: github-pages-redirect
 
   deploy:
     needs: build

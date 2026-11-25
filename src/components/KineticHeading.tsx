@@ -8,7 +8,7 @@ interface KineticHeadingProps {
   as?: Level
   id?: string
   className?: string
-  /** Plain-text heading for assistive tech; the animated copy is aria-hidden */
+  /** Plain-text heading: becomes the heading's aria-label once the text is split for animation */
   label: string
   children: ReactNode
   /** 'scroll' waits for the heading to enter view; 'load' plays immediately */
@@ -44,10 +44,19 @@ export function KineticHeading({
 
     const play = () =>
       ctx.add(() => {
+        // The heading text exists once in the HTML (crawlers and pre-JS screen
+        // readers read it as-is). Splitting turns it into per-letter boxes that
+        // some screen readers would spell out, so only now does the heading get
+        // its name from `label` and the split layer get hidden. Undone on revert.
+        el.setAttribute('aria-label', label)
+        target.setAttribute('aria-hidden', 'true')
+
         // autoSplit re-splits once web fonts land (or on resize) and re-creates
         // the returned timeline at the same progress, so line breaks stay right.
         SplitText.create(target, {
-          type: 'lines,chars',
+          // words: keeps each word in one wrapper, so a narrow column can
+          // never wrap a heading between letters
+          type: 'lines,words,chars',
           mask: 'lines',
           aria: 'none',
           // SplitText rebuilds the letters, so any per-letter class has to be
@@ -75,6 +84,11 @@ export function KineticHeading({
               .to(slashRef.current, { scaleX: 0, transformOrigin: 'right center', duration: 0.45, ease: 'expo.inOut' }, '<0.05')
           },
         })
+
+        return () => {
+          el.removeAttribute('aria-label')
+          target.removeAttribute('aria-hidden')
+        }
       })
 
     if (trigger === 'load') play()
@@ -83,8 +97,8 @@ export function KineticHeading({
 
   return (
     <Tag id={id} ref={ref} className={`relative ${className}`}>
-      <span className="sr-only">{label}</span>
-      <span data-split aria-hidden="true" className="block">
+      {/* The only copy of the text: no separate screen-reader duplicate */}
+      <span data-split className="block">
         {children}
       </span>
       <span

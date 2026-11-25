@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "images": "node scripts/optimize-images.mjs",
+    "brand-assets": "node scripts/make-brand-assets.mjs",
     "predev": "npm run images",
     "dev": "vite",
     "prebuild": "npm run images",
@@ -27,6 +28,8 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.3.0",
     "oxlint": "^1.69.0",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.1",

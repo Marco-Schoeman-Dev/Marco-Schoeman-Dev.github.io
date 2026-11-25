@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { headerLinks } from '../data/site'
+import { applyHref, nav } from '../data/site'
+import { navIdFor } from '../routes'
+import { useRoute } from '../hooks/useRoute'
 import { MenuOverlay } from './MenuOverlay'
-import { useActiveSection } from '../hooks/useActiveSection'
-
-const kit = '/images/marco-schoeman-brand-kit/01-logo'
+import { Picture } from './Picture'
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
-  const active = useActiveSection(headerLinks.map((l) => l.id))
+  const current = navIdFor(useRoute().id)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -26,29 +26,37 @@ export function Header() {
         }`}
       >
         <div className="shell flex h-(--header-h) items-center justify-between gap-3">
-          <a href="#top" className="-m-1 shrink-0 p-1" aria-label="Marco Schoeman, back to top">
-            <img src={`${kit}/monogram-dark.svg`} alt="" width={36} height={36} className="h-9 w-9 rounded-md md:hidden" />
-            <img src={`${kit}/wordmark-on-dark.svg`} alt="" width={151} height={19} className="hidden h-[19px] w-auto md:block" />
+          {/* Same lockup as the footer, sized to the header bar. The drop
+              shadow keeps the light lettering readable over the hero art. */}
+          <a href="/" className="-m-1 shrink-0 p-1" aria-label="Marco Schoeman, home">
+            <Picture
+              image="logo-lockup"
+              alt="Marco Schoeman logo"
+              sizes="(min-width: 768px) 195px, 162px"
+              eager
+              className="block"
+              imgClassName="h-10 w-auto drop-shadow-[0_1px_8px_rgb(11_6_5/0.85)] md:h-12"
+            />
           </a>
 
-          <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex items-center gap-[clamp(1.5rem,3vw,2.75rem)]">
-              {headerLinks.map((link) => {
-                const current = active === link.id
+          <nav aria-label="Primary" className="hidden lg:block">
+            <ul className="flex items-center gap-[clamp(1.5rem,2.6vw,2.75rem)]">
+              {nav.map((link) => {
+                const active = current === link.id
                 return (
                   <li key={link.id}>
                     <a
                       href={link.href}
-                      aria-current={current ? 'location' : undefined}
+                      aria-current={active ? 'page' : undefined}
                       className={`label relative inline-flex min-h-11 items-center transition-colors duration-200 hover:text-ink ${
-                        current ? 'text-ink' : 'text-muted'
+                        active ? 'text-ink' : 'text-muted'
                       }`}
                     >
                       {link.label}
                       <span
                         aria-hidden="true"
-                        className={`neon-line absolute inset-x-0 bottom-2 origin-left transition-transform duration-300 ease-expo ${
-                          current ? 'scale-x-100' : 'scale-x-0'
+                        className={`ember-rule absolute inset-x-0 bottom-2 origin-left transition-transform duration-300 ease-expo ${
+                          active ? 'scale-x-100' : 'scale-x-0'
                         }`}
                       />
                     </a>
@@ -59,13 +67,13 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a href="#contact" className="btn btn-primary btn-sm">
-              Start a project
+            <a href={applyHref} className="btn btn-primary btn-sm">
+              Apply
             </a>
             <button
               ref={menuButtonRef}
               type="button"
-              className="btn btn-secondary btn-sm min-w-11 px-3"
+              className="btn btn-secondary btn-sm min-w-11 px-3 lg:hidden"
               aria-haspopup="dialog"
               aria-expanded={open}
               aria-controls="site-menu"
@@ -81,7 +89,7 @@ export function Header() {
         </div>
       </header>
 
-      <MenuOverlay open={open} onClose={() => setOpen(false)} />
+      <MenuOverlay open={open} onClose={() => setOpen(false)} current={current} />
     </>
   )
 }
