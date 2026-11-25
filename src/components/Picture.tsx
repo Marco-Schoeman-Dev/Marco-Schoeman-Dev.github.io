@@ -1,13 +1,16 @@
-import { images, type ImageKey } from '../data/images'
+import { images, type ImageEntry, type ImageKey } from '../data/images'
 
 interface PictureProps {
-  image: ImageKey
+  /** A named image, or a manifest entry (e.g. from imageForPath) */
+  image: ImageKey | ImageEntry
   alt: string
   sizes: string
   className?: string
   imgClassName?: string
-  /** Above-the-fold images: eager + high priority. Everything else lazy. */
+  /** The LCP image: eager + high priority. Everything else lazy. */
   priority?: boolean
+  /** Above the fold but not the LCP (e.g. the header logo): eager, normal priority */
+  eager?: boolean
   /** Art direction: swap to another image below this media query */
   mobile?: { image: ImageKey; media: string; sizes?: string }
 }
@@ -15,8 +18,8 @@ interface PictureProps {
 const srcset = (list: string[]) => list.join(', ')
 
 /** AVIF → WebP → fallback, with intrinsic width/height to prevent layout shift. */
-export function Picture({ image, alt, sizes, className, imgClassName, priority, mobile }: PictureProps) {
-  const img = images[image]
+export function Picture({ image, alt, sizes, className, imgClassName, priority, eager, mobile }: PictureProps) {
+  const img = typeof image === 'string' ? images[image] : image
   const alt2 = mobile ? images[mobile.image] : null
 
   return (
@@ -34,7 +37,7 @@ export function Picture({ image, alt, sizes, className, imgClassName, priority, 
         alt={alt}
         width={img.width}
         height={img.height}
-        loading={priority ? 'eager' : 'lazy'}
+        loading={priority || eager ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
         fetchPriority={priority ? 'high' : 'auto'}
         className={imgClassName}
