@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moved to marcoschoeman.com</title>
+    <link rel="canonical" href="https://marcoschoeman.com/" />
+    <meta name="theme-color" content="#0b0605" />
+    <!-- No-JS fallback: plain refresh to the new home page -->
+    <meta http-equiv="refresh" content="0; url=https://marcoschoeman.com/" />
+    <script>
+      // Keep old deep links useful: the one-page site's anchors map to the new pages.
+      ;(function () {
+        var map = {
+          '#about': '/work#profile',
+          '#work': '/work#client-work',
+          '#security': '/work#services',
+          '#automation': '/work#services',
+          '#method': '/work#method',
+          '#services': '/work#services',
+          '#contact': '/work#contact',
+        }
+        var target = map[location.hash] || '/'
+        location.replace('https://marcoschoeman.com' + target)
+      })()
+    </script>
+    <style>
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0b0605; color: #fff4ee; font-family: system-ui, sans-serif; }
+      a { color: #f18a36; }
+    </style>
+  </head>
+  <body>
+    <p>This site has moved to <a href="https://marcoschoeman.com/">marcoschoeman.com</a>.</p>
+  </body>
+</html>
