@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { about } from '../data/site'
+import { workIntro } from '../data/site'
 import { stats } from '../data/stats'
 import { credentials } from '../data/credentials'
 import { gsap, restOf } from '../lib/gsap'
@@ -8,23 +8,19 @@ import { Picture } from '../components/Picture'
 import { KineticHeading } from '../components/KineticHeading'
 import { SectionLabel } from '../components/SectionLabel'
 import { CountUp } from '../components/CountUp'
+import { Accent } from '../components/Accent'
 import { IconArrowUpRight } from '../components/Icons'
 
-export function About() {
+/** Work page: condensed bio, stats and credentials. */
+export function Profile({ index = '01' }: { index?: string }) {
   const ref = useRef<HTMLElement>(null)
 
   useGsap(() => {
-    const avatarFrom = { scale: 0.82, rotate: -6, opacity: 0 }
-    gsap.fromTo('[data-about-avatar]', avatarFrom, {
-      ...restOf(avatarFrom),
-      duration: 1.2,
-      scrollTrigger: { trigger: '[data-about-avatar]', start: 'top 80%', once: true },
-    })
     const rise = { y: 24, opacity: 0 }
-    gsap.fromTo('[data-about-copy] > *', rise, {
+    gsap.fromTo('[data-profile-copy] > *', rise, {
       ...restOf(rise),
       stagger: 0.1,
-      scrollTrigger: { trigger: '[data-about-copy]', start: 'top 80%', once: true },
+      scrollTrigger: { trigger: '[data-profile-copy]', start: 'top 80%', once: true },
     })
     // Stat panels slide in from alternating sides like manga panels
     gsap.utils.toArray<HTMLElement>('[data-stat]').forEach((el, i) => {
@@ -45,45 +41,26 @@ export function About() {
   }, ref)
 
   return (
-    <section id="about" ref={ref} aria-labelledby="about-title" className="relative overflow-hidden py-(--section-space)">
+    <section id="profile" ref={ref} aria-labelledby="profile-title" className="relative overflow-hidden py-(--section-space)">
       <div className="sunset-glow" aria-hidden="true" />
 
       <div className="shell relative">
-        <SectionLabel index="01" name="About" kana="プロフィール" className="mb-10 md:mb-16" />
+        <SectionLabel index={index} name="Profile" className="mb-10 md:mb-16" />
 
-        <div className="grid items-center gap-12 md:grid-cols-12 md:gap-8">
-          {/* Character intro: avatar inside focus lines */}
-          <div className="relative mx-auto w-full max-w-[22rem] md:col-span-5 md:max-w-none lg:col-span-4">
-            <div className="relative aspect-square">
-              <div className="focus-lines focus-lines-burst inset-[-22%] opacity-80 [--fl-color:rgb(241_138_54/0.35)]" aria-hidden="true" />
-              <div className="halftone -right-[8%] -bottom-[8%] h-2/3 w-2/3 [--ht-mask:radial-gradient(circle_at_70%_70%,#000,transparent_70%)]" aria-hidden="true" />
-              <div data-about-avatar className="relative">
-                <Picture
-                  image="avatar-ring"
-                  alt={about.avatarAlt}
-                  sizes="(min-width: 768px) 30vw, 22rem"
-                  className="block"
-                  imgClassName="h-auto w-full drop-shadow-[0_0_40px_rgb(241_138_54/0.25)]"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div data-about-copy className="md:col-span-7 lg:col-span-7 lg:col-start-6">
-            <KineticHeading id="about-title" label="Developer. Operator. Both." className="h2 mb-8 text-ink">
-              Developer.
-              <br />
-              Operator.
-              <br />
-              <span className="text-ember">Both.</span>
-            </KineticHeading>
-            <div className="flex max-w-[65ch] flex-col gap-5">
-              {about.paragraphs.map((p) => (
-                <p key={p.slice(0, 24)} className={p === about.paragraphs[0] ? 'lead text-ink' : 'text-muted'}>
-                  {p}
-                </p>
-              ))}
-            </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <KineticHeading id="profile-title" label="Developer. Operator. Both." className="h2 text-ink lg:col-span-5 lg:text-[clamp(3rem,5.2vw,5.5rem)]">
+            Developer.
+            <br />
+            Operator.
+            <br />
+            <Accent>Both.</Accent>
+          </KineticHeading>
+          <div data-profile-copy className="flex max-w-[65ch] flex-col gap-5 lg:col-span-7">
+            {workIntro.map((p, i) => (
+              <p key={p.slice(0, 24)} className={i === 0 ? 'lead text-ink' : 'text-muted'}>
+                {p}
+              </p>
+            ))}
           </div>
         </div>
 
@@ -109,9 +86,7 @@ export function About() {
         {/* Credentials */}
         <div data-creds className="mt-(--section-space)">
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-line pb-5">
-            <h3 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] uppercase">
-              Credentials <span className="kana ml-2 align-middle text-sm" aria-hidden="true" lang="ja">資格</span>
-            </h3>
+            <h3 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] uppercase">Credentials</h3>
             <p className="label text-muted">Verify links open the issuer's record</p>
           </div>
 

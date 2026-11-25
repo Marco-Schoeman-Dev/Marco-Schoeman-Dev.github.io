@@ -4,9 +4,11 @@ import { gsap } from '../lib/gsap'
 import { useGsap } from '../hooks/useGsap'
 import { KineticHeading } from '../components/KineticHeading'
 import { SectionLabel } from '../components/SectionLabel'
+import { Accent } from '../components/Accent'
 import { IconArrowUpRight, IconInstagram, IconTiktok } from '../components/Icons'
 
-export function Contact() {
+/** Work page call to action: "Start a project" via DM or email. */
+export function Contact({ index = '05' }: { index?: string }) {
   const ref = useRef<HTMLElement>(null)
   const instagram = socialById('instagram')
   const tiktok = socialById('tiktok')
@@ -48,11 +50,11 @@ export function Contact() {
       <div className="sunset-glow" aria-hidden="true" />
 
       <div className="shell relative">
-        <SectionLabel index="07" name="Contact" kana="コンタクト" className="mb-6" />
-        <KineticHeading id="contact-title" label={contact.title} className="display text-ink">
-          Build it.
+        <SectionLabel index={index} name="Contact" className="mb-6" />
+        <KineticHeading id="contact-title" label="Start a project." className="display text-ink">
+          Start a
           <br />
-          <span className="text-ember">Break it.</span>
+          <Accent>project</Accent>.
         </KineticHeading>
 
         <div className="mt-10 grid gap-8 md:mt-14 md:grid-cols-12">
@@ -61,8 +63,8 @@ export function Contact() {
               {contact.lead}
             </p>
             <p data-contact-fade className="label mt-6 flex items-center gap-3 text-ink">
-              <span className="live-dot h-2 w-2 shrink-0 rounded-full bg-signal" aria-hidden="true" />
-              {contact.replyNote}
+              <span className="live-dot h-2 w-2 shrink-0 rounded-full bg-ember" aria-hidden="true" />
+              Available for new projects
             </p>
           </div>
 
@@ -77,7 +79,7 @@ export function Contact() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`panel block h-full focus-visible:outline-none ${primary ? 'panel-cut-tr [--panel-ink:var(--ember)]' : 'panel-cut-bl'}`}
+                    className={`panel block h-full focus-visible:outline-none ${primary ? 'panel-cut-tr [--panel-ink:var(--ember-glow)]' : 'panel-cut-bl'}`}
                   >
                     <span
                       className={`panel-inner flex min-h-56 flex-col justify-between gap-10 p-6 md:min-h-72 md:p-8 ${
@@ -108,7 +110,7 @@ export function Contact() {
 
         <p data-contact-fade className="mt-12 text-muted">
           Prefer email?{' '}
-          <a href={`mailto:${site.email}`} className="link text-ink">
+          <a href={`mailto:${site.email}?subject=${encodeURIComponent('New project')}`} className="link text-ink">
             {site.email}
           </a>
         </p>

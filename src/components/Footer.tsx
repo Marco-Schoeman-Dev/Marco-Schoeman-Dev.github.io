@@ -1,8 +1,9 @@
-import { menu, site, socials } from '../data/site'
+import { applyHref, nav, site, socials } from '../data/site'
 import { IconArrowUpRight } from './Icons'
 import { socialIcon } from './socialIcons'
-import { NeonWordmark } from './NeonWordmark'
+import { Picture } from './Picture'
 
+const footerNav = [{ id: 'home', label: 'Home', href: '/' }, ...nav]
 
 export function Footer() {
   return (
@@ -13,7 +14,7 @@ export function Footer() {
         <nav aria-label="Footer">
           <p className="label mb-4 text-muted">Navigate</p>
           <ul className="flex flex-col gap-1">
-            {menu.map((m, i) => (
+            {footerNav.map((m, i) => (
               <li key={m.id}>
                 <a href={m.href} className="group inline-flex min-h-11 items-center gap-3 font-display text-xl font-semibold uppercase hover:text-ember">
                   <span className="label text-ember">{String(i + 1).padStart(2, '0')}</span>
@@ -55,21 +56,34 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-6 lg:items-end">
-          <a href="#top" className="btn btn-secondary">
-            Back to top
-            <IconArrowUpRight width={16} height={16} className="-rotate-45" />
-          </a>
-          <p className="label text-muted lg:text-right">
-            © {site.year} {site.name}
-            <br />
-            {site.role}
-          </p>
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <a href={applyHref} className="btn btn-primary">
+              Apply
+            </a>
+            <a href="#top" className="btn btn-secondary">
+              Back to top
+              <IconArrowUpRight width={16} height={16} className="-rotate-45" />
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Giant wordmark */}
-      <div className="shell relative mt-16 pb-6 md:mt-24">
-        <NeonWordmark className="block h-auto w-full overflow-visible" />
+      {/* Brand lockup + copyright */}
+      <div className="shell relative mt-16 flex flex-col gap-6 border-t border-line py-8 sm:flex-row sm:items-center sm:justify-between md:mt-24">
+        <a href="/" className="-m-1 self-start p-1" aria-label="Marco Schoeman, home">
+          <Picture
+            image="logo-lockup"
+            alt="Marco Schoeman logo"
+            sizes="(min-width: 768px) 325px, 260px"
+            className="block"
+            imgClassName="h-16 w-auto md:h-20"
+          />
+        </a>
+        <p className="label text-muted sm:text-right">
+          © {site.year} {site.name}
+          <br />
+          {site.role}
+        </p>
       </div>
     </footer>
   )
