@@ -1,0 +1,20 @@
+# Cloudflare Pages response headers. Docs: https://developers.cloudflare.com/pages/configuration/headers/
+# Rules that match the same path are merged.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), usb=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000
+
+# Vite output: file names change on every build, so cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image names stay the same when an image is replaced: cache a week
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+

@@ -1,0 +1,10 @@
+# Cloudflare Pages path redirects. Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+# www -> apex cannot live here (_redirects only matches paths, not hostnames).
+# Set it up as a Cloudflare Redirect Rule instead: see README.md.
+
+/apply          /founders-club   301
+/club           /founders-club   301
+/founders       /founders-club   301
+/live           /lives           301
+/blog           /lives           301
+/contact        /about           301
